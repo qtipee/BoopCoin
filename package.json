@@ -1,0 +1,11 @@
+{
+  "name": "blockchain-js",
+  "version": "1.0.0",
+  "description": "Blockchain Tuto",
+  "author": "qtipee",
+  "private": true,
+  "dependencies": {
+    "crypto-js": "^4.0.0",
+    "elliptic": "^6.5.2"
+  }
+}
