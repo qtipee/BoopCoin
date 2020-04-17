@@ -1,10 +1,9 @@
 
 const crypto = require('crypto')
-
 const EC = require('elliptic').ec
-// Elliptic Curve
-const ec = new EC('secp256k1')
+const ec = new EC('secp256k1') // Elliptic Curve
 
+// Represents a transaction ; two wallet addresses, an amount and a timestamp
 class Transaction
 {
     constructor(fromAddress, toAddress, amount)
@@ -17,8 +16,12 @@ class Transaction
 
     calculateHash()
     {
-        return crypto.createHash('sha256').update(this.fromAddress + this.toAddress + this.amount + this.timestamp).digest('hex')
-        //return SHA256(this.fromAddress + this.toAddress + this.amount).toString()
+        return crypto.createHash('sha256').update(
+                this.fromAddress +
+                this.toAddress +
+                this.amount +
+                this.timestamp
+            ).digest('hex')
     }
 
     signTransaction(signingKey)
@@ -44,10 +47,12 @@ class Transaction
         }
 
         const publicKey = ec.keyFromPublic(this.fromAddress, 'hex')
+
         return publicKey.verify(this.calculateHash(), this.signature)
     }
 }
 
+// A block contains some transactions, its hash and the previous block hash
 class Block
 {
     constructor(timestamp, transactions, previousHash = '')
@@ -61,8 +66,12 @@ class Block
 
     calculateHash()
     {
-        return crypto.createHash('sha256').update(this.previousHash + this.timestamp + JSON.stringify(this.transactions) + this.nonce).digest('hex')
-        //return SHA256(this.previousHash + this.timestamp + JSON.stringify(this.transactions) + this.nonce).toString()
+        return crypto.createHash('sha256').update(
+                this.previousHash +
+                this.timestamp +
+                JSON.stringify(this.transactions)
+                + this.nonce
+            ).digest('hex')
     }
 
     mineBlock(difficulty)
@@ -87,12 +96,13 @@ class Block
     }
 }
 
+// A blockchain contains mined blocks
 class Blockchain
 {
     constructor()
     {
         this.chain = [this._createGenesisBlock()]
-        this.difficulty = 2
+        this.difficulty = 2 // proof of work difficulty
         this.pendingTransactions = []
         this.miningReward = 100
     }

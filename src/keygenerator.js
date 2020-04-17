@@ -1,7 +1,8 @@
 
 const EC = require('elliptic').ec
-// Elliptic Curve
-const ec = new EC('secp256k1')
+const ec = new EC('secp256k1') // Elliptic Curve
+
+// Generates a pair of public-private keys
 
 const key = ec.genKeyPair()
 const publicKey = key.getPublic('hex')
