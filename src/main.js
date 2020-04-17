@@ -12,13 +12,17 @@ let boopCoin = new Blockchain()
 const tx1 = new Transaction(myWalletAddress, 'public key goes here', 10)
 tx1.signTransaction(myKey)
 boopCoin.addTransaction(tx1)
-
-console.log('\n Starting the miner...')
+console.log('Mining block 1...')
 boopCoin.minePendingTransactions(myWalletAddress)
-console.log('\n My balance', boopCoin.getBalanceOfAddress(myWalletAddress))
-console.log('\n Is blockchain valid ?', boopCoin.isChainValid())
 
-// Altering the blockchain
-console.log('\n Altering the blockchain...')
-boopCoin.chain[1].transactions[0].amount = 1
-console.log('Is blockchain valid ?', boopCoin.isChainValid())
+const tx2 = new Transaction(myWalletAddress, 'public key goes here', 20)
+tx2.signTransaction(myKey)
+boopCoin.addTransaction(tx2)
+console.log('Mining block 2...')
+boopCoin.minePendingTransactions(myWalletAddress)
+
+const tx3 = new Transaction(myWalletAddress, 'public key goes here', 30)
+tx3.signTransaction(myKey)
+boopCoin.addTransaction(tx3)
+console.log('Mining block 3...')
+boopCoin.minePendingTransactions(myWalletAddress)
